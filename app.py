@@ -5,7 +5,8 @@ import helper, summarizer
 
 df = pd.read_csv('FIFA-World-Cup-1930-2022-All-Match-Dataset.csv', encoding='ISO-8859-1')
 
-st.sidebar.title("FIFA WorldCup Analyzer")
+st.sidebar.markdown("<h1 style='text-align: center;'>FIFA WorldCup Analyzer</h1>", unsafe_allow_html=True)
+st.sidebar.image('images/fifa.jpg')
 
 user_menu = st.sidebar.radio(
     'Select an Option',
@@ -130,11 +131,11 @@ if (user_menu == 'Home'):
 
 if(user_menu == 'Graph Visualization'):
     st.title("FIFA WorldCup Graph Visualization")
-    st.write("Choose two year for line graph visualization")
 
 
     Total_Number = ['No of Countries', '1', '2', '3']
-    no_countries = st.selectbox("No of Countries", Total_Number)
+    no_countries = st.selectbox("Line Graph Plot between countries", Total_Number)
+
 
     total_country_name_list = helper.total_country_name(df)
     # total_country_name_list.insert(0, "Pick Country")
