@@ -140,3 +140,19 @@ def calculate_games_played_each_year(df, year, country):
             games_played += 1
 
     return games_played
+
+
+def calculate_final_reach(df, year, country):
+    final_participation = 0
+
+    df_filtered = df[df['tournament Name'].str.split().str[0] == year]
+
+    for index, row in df_filtered.iterrows():
+        if row['Stage Name'] == 'final':
+            countries = row['Match Name'].split(' v ')
+            if country in countries:
+                final_participation = 1
+
+    return final_participation
+
+

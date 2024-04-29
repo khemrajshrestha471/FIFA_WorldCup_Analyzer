@@ -173,3 +173,19 @@ if(user_menu == 'Graph Visualization'):
             plt.xticks(rotation=45)
             plt.legend()
             st.pyplot(plt)
+
+            plt.figure(figsize=(10, 6))
+            for country in selected_countries.values():
+                final_reach_count = []
+                for year in match_year:
+                    final_reach = helper.calculate_final_reach(df, year, country)
+                    final_reach_count.append(final_reach)
+
+                plt.plot(match_year, final_reach_count, marker='o', linestyle='-', label=country)
+
+            plt.xlabel('Years')
+            plt.ylabel('Number of times, it reaches to Final')
+            plt.title('Number of Final reached over years')
+            plt.xticks(rotation=45)
+            plt.legend()
+            st.pyplot(plt)
