@@ -4,7 +4,7 @@ import helper, summarizer
 
 df = pd.read_csv('FIFA-World-Cup-1930-2022-All-Match-Dataset.csv', encoding='ISO-8859-1')
 
-st.sidebar.title("FIFA WorldCup Analysizer")
+st.sidebar.title("FIFA WorldCup Analyzer")
 
 user_menu = st.sidebar.radio(
     'Select an Option',
@@ -12,7 +12,7 @@ user_menu = st.sidebar.radio(
 )
 
 if (user_menu == 'Home'):
-    st.title("Welcome to FIFA WorldCup Analysizer")
+    st.title("Welcome to FIFA WorldCup Analyzer")
     match_year = helper.list_of_match_years(df)
 
     match_year.insert(0, "Pick a Year")
