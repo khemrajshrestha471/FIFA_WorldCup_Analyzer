@@ -21,8 +21,12 @@ if (user_menu == 'Home'):
 
     match_held_country, match_names, winner_country = helper.get_country_name_by_year(df, selected_year)
 
+    formatted_matches = [f"Match is played between {country}" for country in match_names]
+
+    match_names_string = ', '.join(formatted_matches)
 
     match_names.insert(0, "Pick Match")
+
 
     countries_took_part, max_played, max_count, min_played, min_count = helper.extract_countries_list(df, selected_year)
 
@@ -90,20 +94,20 @@ if (user_menu == 'Home'):
                     if(home_team_penalty_score > away_team_penalty_score):
                         st13 = home_team + " won the match. "
                         st.write(st13)
-                        text_to_be_summarized = st1 + st2 + st3 + st4 + st5 + st6 + st7 + st8 + st9 + st10 + st11 + st12 + st13 + result_country_match_played
+                        text_to_be_summarized = st1 + st2 + st3 + st4 + st5 + st6 + st7 + st8 + st9 + st10 + st11 + st12 + st13 + result_country_match_played + match_names_string
                     else:
                         st14 = away_team + " won the match. "
                         st.write(st14)
-                        text_to_be_summarized = st1 + st2 + st3 + st4 + st5 + st6 + st7 + st8 + st9 + st10 + st11 + st12 + st14 + result_country_match_played
+                        text_to_be_summarized = st1 + st2 + st3 + st4 + st5 + st6 + st7 + st8 + st9 + st10 + st11 + st12 + st14 + result_country_match_played + match_names_string
                 else:
                     if(home_team_score > away_team_score):
                         st15 = home_team + " won the match. "
                         st.write(st15)
-                        text_to_be_summarized = st1 + st2 + st3 + st4 + st5 + st6 + st7 + st8 + st9 + st10 + st11 + st15 + result_country_match_played
+                        text_to_be_summarized = st1 + st2 + st3 + st4 + st5 + st6 + st7 + st8 + st9 + st10 + st11 + st15 + result_country_match_played + match_names_string
                     else:
                         st16 = away_team + " won the match. "
                         st.write(st16)
-                        text_to_be_summarized = st1 + st2 + st3 + st4 + st5 + st6 + st7 + st8 + st9 + st10 + st11 + st16 + result_country_match_played
+                        text_to_be_summarized = st1 + st2 + st3 + st4 + st5 + st6 + st7 + st8 + st9 + st10 + st11 + st16 + result_country_match_played + match_names_string
                 
                 prompt_qst = """ Based on this, answer the question """
                 question_area = st.text_area("Ask the Question Here", height=30)
