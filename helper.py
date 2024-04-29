@@ -113,3 +113,30 @@ def calculate_games_played(df, year, country):
             games_played += 1
 
     return games_played, matches_played_by_country
+
+
+def total_country_name(df):
+    unique_country_set = set()
+    for match_country in df['Match Name']:
+        countries = match_country.split(' v ')
+        unique_country_set = unique_country_set.union(set(countries))
+    return sorted(list(unique_country_set))
+
+
+def calculate_games_played_each_year(df, year, country):
+    # Initialize a count to store the number of games played by the country
+    games_played = 0
+
+    # Filter the DataFrame by the provided year
+    df_filtered = df[df['tournament Name'].str.split().str[0] == year]
+
+    # Iterate through the 'Match Country' column of the filtered DataFrame
+    for match_country in df_filtered['Match Name']:
+        # Split the string based on the 'v' character
+        countries = match_country.split(' v ')
+        # Check if the provided country is in the list of countries for this match
+        if country in countries:
+            # Increment the count of games played by the country
+            games_played += 1
+
+    return games_played

@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
 import helper, summarizer
 
 df = pd.read_csv('FIFA-World-Cup-1930-2022-All-Match-Dataset.csv', encoding='ISO-8859-1')
@@ -127,12 +128,47 @@ if (user_menu == 'Home'):
                         st.write(summarized_text)
                 
 
-
-
-
-
-
-
 if(user_menu == 'Graph Visualization'):
     st.title("FIFA WorldCup Graph Visualization")
     st.write("Choose two year for line graph visualization")
+
+
+    Total_Number = ['No of Countries', '1', '2', '3']
+    no_countries = st.selectbox("No of Countries", Total_Number)
+
+    total_country_name_list = helper.total_country_name(df)
+    # total_country_name_list.insert(0, "Pick Country")
+
+    if no_countries != 'No of Countries':
+        no_countries = int(no_countries)
+        num_columns = min(no_countries, 3)
+        selected_countries = {}  # List to store selected countries
+        columns = st.columns(num_columns)
+        
+        for i in range(no_countries):
+            # Filter out the already selected countries
+            available_countries = [country for country in total_country_name_list if country not in selected_countries.values()]
+            selected_country = columns[i % num_columns].selectbox(f"Pick Country {i+1}", available_countries, key=f"country_select_{i}")
+            selected_countries[i] = selected_country
+
+        visualize = st.button("Visualize")
+
+        if visualize:
+            match_year = helper.list_of_match_years(df)
+            plt.figure(figsize=(10, 6))
+
+            for country in selected_countries.values():
+                match_counts = []
+                for year in match_year:
+                    total_matches = helper.calculate_games_played_each_year(df, year, country)
+                    match_counts.append(total_matches)
+
+                # Plotting the line chart for each country
+                plt.plot(match_year, match_counts, marker='o', linestyle='-', label=country)
+
+            plt.xlabel('Years')
+            plt.ylabel('Number of Matches Played')
+            plt.title('Number of Matches Played Each Year')
+            plt.xticks(rotation=45)
+            plt.legend()
+            st.pyplot(plt)

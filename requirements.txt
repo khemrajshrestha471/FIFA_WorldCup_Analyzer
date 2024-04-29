@@ -6,3 +6,4 @@ pandas
 google-generativeai
 python-dotenv
 pathlib
+matplotlib
