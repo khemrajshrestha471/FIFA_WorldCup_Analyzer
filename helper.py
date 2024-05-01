@@ -207,3 +207,37 @@ def return_year_winner_country(df):
             match_year_winner[year] = winner
     
     return match_year_winner
+
+def winner_list_with_frequency(df):
+    # Initialize an empty dictionary to store country names and their corresponding frequencies
+    winner_frequency = {}
+
+    # Initialize an empty set to store unique years
+    unique_years = set()
+
+    # Iterate over each element in the 'tournament Name' column
+    for name in df['tournament Name']:
+        # Split the string by whitespace and retrieve the first element (index 0) as the year
+        year = name.split()[0]
+        
+        # Check if the year is not already in the set
+        if year not in unique_years:
+            # Add the year to the set of unique years
+            unique_years.add(year)
+            
+            # Get the winner for the current year
+            winner = df[df['tournament Name'].str.startswith(year)]['Winner'].values[0]
+            
+            # Check if the country is already in the dictionary
+            if winner in winner_frequency:
+                # Increment the frequency count for the country
+                winner_frequency[winner][0] += 1
+                # Append the year to the list of winning years for the country
+                winner_frequency[winner][1].append(year)
+            else:
+                # Initialize the frequency count and list of winning years for the country
+                winner_frequency[winner] = [1, [year]]
+    
+    return winner_frequency
+
+

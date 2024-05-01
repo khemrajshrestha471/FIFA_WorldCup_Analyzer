@@ -14,7 +14,7 @@ user_menu = st.sidebar.radio(
 )
 
 if (user_menu == 'Home'):
-    st.title("Welcome to FIFA WorldCup Analyzer")
+    st.markdown("<h1 style='text-align: center;'>Welcome to FIFA WorldCup Analyzer</h1>", unsafe_allow_html=True)
     match_year = helper.list_of_match_years(df)
 
     match_year.insert(0, "Pick a Year")
@@ -144,8 +144,7 @@ if (user_menu == 'Home'):
                 
 
 if(user_menu == 'Graph Visualization'):
-    st.title("FIFA WorldCup Graph Visualization")
-
+    st.markdown("<h1 style='text-align: center;'>FIFA WorldCup Graph Visualization</h1>", unsafe_allow_html=True)
 
     Total_Number = ['No of Countries', '1', '2', '3']
     no_countries = st.selectbox("Line Graph Plot between countries", Total_Number)
@@ -205,7 +204,34 @@ if(user_menu == 'Graph Visualization'):
             st.pyplot(plt)
 
 if user_menu == 'Overall Analysis':
-    st.title("FIFA WorldCup Overall Analysis")
+    st.markdown("<h1 style='text-align: center;'>FIFA WorldCup Overall Analysis</h1>", unsafe_allow_html=True)
+
+    winner_country_frequency = helper.winner_list_with_frequency(df)
+
+    # Extracting country names, frequencies, and years from the dictionary
+    countries = list(winner_country_frequency.keys())
+    frequencies = [freq for freq, _ in winner_country_frequency.values()]
+    years_list = ["\n\n".join(years) for _, years in winner_country_frequency.values()]
+
+    # Define colors for each bar
+    colors = ['skyblue', 'salmon', 'lightgreen', 'gold', 'lightcoral', 'lightblue', 'lightsalmon', 'lightgreen']
+
+    # Plotting the bar chart with individual colors for each bar
+    plt.figure(figsize=(10, 6))
+    bars = plt.bar(countries, frequencies, color=colors)
+    plt.xlabel('Countries')
+    plt.ylabel('Winning Frequency')
+    plt.title('Frequency of Winning Countries in FIFA World Cup')
+    plt.xticks(rotation=45, ha='right')  # Rotate x-axis labels for better readability
+    plt.tight_layout()  # Adjust layout to prevent labels from getting cut off
+
+    # Displaying the years inside each bar with increased font size
+    for bar, year_label in zip(bars, years_list):
+        plt.text(bar.get_x() + bar.get_width() / 2, bar.get_height()/2, year_label, ha='center', va='center', fontsize=11)
+
+    # Display the bar chart using st.pyplot
+    st.pyplot(plt)
+
     match_year = helper.list_of_match_years(df)
     match_year.insert(0, "Pick a Year")
 
