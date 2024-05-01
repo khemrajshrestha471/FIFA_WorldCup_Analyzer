@@ -23,9 +23,17 @@ if (user_menu == 'Home'):
 
     match_held_country, match_names, winner_country = helper.get_country_name_by_year(df, selected_year)
 
+
     formatted_matches = [f"Match is played between {country}" for country in match_names]
 
     match_names_string = ', '.join(formatted_matches)
+
+    year_winner = helper.return_year_winner_country(df)
+
+    formatted_string_winner = ""
+    for year, winner in year_winner.items():
+        formatted_string_winner += f"The winner of FIFA WorldCup {year} was {winner}. "
+
 
     match_names.insert(0, "Pick Match")
 
@@ -33,7 +41,8 @@ if (user_menu == 'Home'):
     countries_took_part, max_played, max_count, min_played, min_count = helper.extract_countries_list(df, selected_year)
 
     if(selected_year != "Pick a Year" and selected_year != " "):
-        st.title("History of FIFA WorldCup of the year " + selected_year)
+        header_title = f"<h2 style='text-align: center;'>History of FIFA WorldCup {selected_year} !</h2>"
+        st.markdown(header_title, unsafe_allow_html=True)
         st1 = "FIFA WorldCup " + selected_year + " was held in " + match_held_country + ". "
         st.write(st1)
         st2 = "The winner of FIFA WorldCup " + selected_year + " was " + winner_country + ". "
@@ -97,25 +106,29 @@ if (user_menu == 'Home'):
                         st13 = home_team + " won the match. "
                         st.write(st13)
                         text_to_be_summarized = st1 + st2 + st3 + st4 + st5 + st6 + st7 + st8 + st9 + st10 + st11 + st12 + st13 + result_country_match_played + match_names_string
+                        question_answer_model = text_to_be_summarized + formatted_string_winner
                     else:
                         st14 = away_team + " won the match. "
                         st.write(st14)
                         text_to_be_summarized = st1 + st2 + st3 + st4 + st5 + st6 + st7 + st8 + st9 + st10 + st11 + st12 + st14 + result_country_match_played + match_names_string
+                        question_answer_model = text_to_be_summarized + formatted_string_winner
                 else:
                     if(home_team_score > away_team_score):
                         st15 = home_team + " won the match. "
                         st.write(st15)
                         text_to_be_summarized = st1 + st2 + st3 + st4 + st5 + st6 + st7 + st8 + st9 + st10 + st11 + st15 + result_country_match_played + match_names_string
+                        question_answer_model = text_to_be_summarized + formatted_string_winner
                     else:
                         st16 = away_team + " won the match. "
                         st.write(st16)
                         text_to_be_summarized = st1 + st2 + st3 + st4 + st5 + st6 + st7 + st8 + st9 + st10 + st11 + st16 + result_country_match_played + match_names_string
+                        question_answer_model = text_to_be_summarized + formatted_string_winner
                 
                 prompt_qst = """ Based on this, answer the question """
                 question_area = st.text_area("Ask the Question Here", height=30)
                 submit_button = st.button("Submit")
                 if(submit_button and question_area):
-                    answer_text = summarizer.generate_gemini_answer(text_to_be_summarized, prompt_qst, question_area)
+                    answer_text = summarizer.generate_gemini_answer(question_answer_model, prompt_qst, question_area)
                     st.write(answer_text)
 
                 summarize = st.button("Summarize the History")
@@ -125,7 +138,8 @@ if (user_menu == 'Home'):
                     
                     summarized_text = summarizer.generate_gemini_content(text_to_be_summarized, prompt)
                     if (summarized_text):
-                        st.subheader("Summary of FIFA WorldCup " + selected_year + " between " + home_team + " Vs " + away_team + "!") 
+                        header_string = f"<h2 style='text-align: center;'>Summary of FIFA World Cup {selected_year} !</h2>"
+                        st.markdown(header_string, unsafe_allow_html=True)
                         st.write(summarized_text)
                 
 

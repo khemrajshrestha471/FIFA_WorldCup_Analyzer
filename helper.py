@@ -184,3 +184,26 @@ def list_country_played_with_frequency(df, year):
 
     # Return the sorted list
     return sorted_games_played_list
+
+
+def return_year_winner_country(df):
+    # Initialize an empty set to store unique years
+    unique_years = set()
+
+    # Initialize an empty dictionary to store match years and corresponding winner country names
+    match_year_winner = {}
+
+    # Iterate over each element in the 'tournament Name' column and 'Winner' column simultaneously
+    for name, winner in zip(df['tournament Name'], df['Winner']):
+        # Split the string by whitespace and retrieve the first element (index 0) as the year
+        year = name.split()[0]
+        
+        # Check if the year is not already in the set
+        if year not in unique_years:
+            # Add the year to the set of unique years
+            unique_years.add(year)
+            
+            # Store the match year and corresponding winner country name in the dictionary
+            match_year_winner[year] = winner
+    
+    return match_year_winner
