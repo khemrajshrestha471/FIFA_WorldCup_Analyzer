@@ -248,7 +248,7 @@ if user_menu == 'Overall Analysis':
         # Plotting the pie chart with frequencies displayed inside the slices
         plt.figure(figsize=(8, 8))
         plt.pie(frequencies, labels=countries, autopct=lambda x: f'{int(x/100 * total_games)}', startangle=90)
-        plt.title('Country-wise Distribution of Games Played \n')
+        plt.title(f'Country-wise Distribution of Match Played in {selected_year}\n')
         plt.axis('equal')  
         st.pyplot(plt)
 
