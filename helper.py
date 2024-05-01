@@ -238,6 +238,7 @@ def winner_list_with_frequency(df):
                 # Initialize the frequency count and list of winning years for the country
                 winner_frequency[winner] = [1, [year]]
     
-    return winner_frequency
-
-
+    # Sort the winner_frequency dictionary by keys (country names) in alphabetical order
+    sorted_winner_frequency = dict(sorted(winner_frequency.items()))
+    
+    return sorted_winner_frequency
