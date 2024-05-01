@@ -190,7 +190,26 @@ if(user_menu == 'Graph Visualization'):
             plt.legend()
             st.pyplot(plt)
 
-
-if(user_menu == 'Overall Analysis'):
+if user_menu == 'Overall Analysis':
     st.title("FIFA WorldCup Overall Analysis")
-    st.image('images/fifa.jpg')
+    match_year = helper.list_of_match_years(df)
+    match_year.insert(0, "Pick a Year")
+
+    selected_year = st.selectbox("Select Year", match_year)
+    list_game_played = helper.list_country_played_with_frequency(df, selected_year)
+
+    if(selected_year != "Pick a Year" and selected_year != " "):
+
+        # Extracting country names and frequencies from the list
+        countries = [item[0] for item in list_game_played]
+        frequencies = [int(item[1]) for item in list_game_played]
+        total_games = sum(frequencies)
+
+        # Plotting the pie chart with frequencies displayed inside the slices
+        plt.figure(figsize=(8, 8))
+        plt.pie(frequencies, labels=countries, autopct=lambda x: f'{int(x/100 * total_games)}', startangle=90)
+        plt.title('Country-wise Distribution of Games Played \n')
+        plt.axis('equal')  
+        st.pyplot(plt)
+
+

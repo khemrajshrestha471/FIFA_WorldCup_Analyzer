@@ -156,3 +156,31 @@ def calculate_final_reach(df, year, country):
     return final_participation
 
 
+def list_country_played_with_frequency(df, year):
+    # Initialize a dictionary to store the count of games played by each country
+    games_played_by_country = {}
+
+    # Filter the DataFrame by the provided year
+    df_filtered = df[df['tournament Name'].str.split().str[0] == year]
+
+    # Iterate through the 'Match Name' column of the filtered DataFrame
+    for match_country in df_filtered['Match Name']:
+        # Split the string based on the ' v ' character
+        countries = match_country.split(' v ')
+        # Iterate through each country in the match
+        for country in countries:
+            # Check if the country is already in the dictionary, if not, add it
+            if country not in games_played_by_country:
+                games_played_by_country[country] = 1
+            else:
+                # Increment the count of games played by the country
+                games_played_by_country[country] += 1
+
+    # Convert the dictionary to a list of tuples
+    games_played_list = list(games_played_by_country.items())
+    
+    # Sort the list based on the number of games played (second element of the tuple) and country name
+    sorted_games_played_list = sorted(games_played_list, key=lambda x: (x[1], x[0]), reverse=True)
+
+    # Return the sorted list
+    return sorted_games_played_list
