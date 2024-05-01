@@ -189,3 +189,8 @@ if(user_menu == 'Graph Visualization'):
             plt.xticks(rotation=45)
             plt.legend()
             st.pyplot(plt)
+
+
+if(user_menu == 'Overall Analysis'):
+    st.title("FIFA WorldCup Overall Analysis")
+    st.image('images/fifa.jpg')
