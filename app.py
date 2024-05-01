@@ -10,11 +10,11 @@ st.sidebar.image('images/fifa.jpg')
 
 user_menu = st.sidebar.radio(
     'Select an Option',
-    ('Home', 'Graph Visualization', 'Overall Analysis')
+    ('Home', 'Graph Visualization', 'Overall Analysis', 'Prediction')
 )
 
 if (user_menu == 'Home'):
-    st.markdown("<h1 style='text-align: center;'>Welcome to FIFA WorldCup Analyzer</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>Welcome to the FIFA WorldCup Analyzer</h1>", unsafe_allow_html=True)
     match_year = helper.list_of_match_years(df)
 
     match_year.insert(0, "Pick a Year")
@@ -253,3 +253,6 @@ if user_menu == 'Overall Analysis':
         st.pyplot(plt)
 
 
+if (user_menu == 'Prediction'):
+    st.markdown("<h1 style='text-align: center;'>Predict the Outcome</h1>", unsafe_allow_html=True)
+    # think and write the logic for prediction
